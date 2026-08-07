@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f766e">
+  <title>Gasto na Foto — Finanças Pessoais</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Puter.js: IA de graça, sem chave -->
+  <script src="https://js.puter.com/v2/"></script>
+</head>
+<body>
+
+  <header>
+    <h1>📸 Gasto na Foto</h1>
+    <p>Fotografe o comprovante. A IA anota pra você.</p>
+  </header>
+
+  <!-- O TOTAL DO MÊS -->
+  <section class="cartao-total">
+    <span class="rotulo">Total gasto</span>
+    <strong id="total">R$ 0,00</strong>
+    <span class="rotulo"><span id="quantos">0</span> comprovantes lidos</span>
+  </section>
+
+  <!-- ÁREA DE FOTO -->
+  <label class="area-foto" for="foto" role="button" tabindex="0" aria-label="Enviar foto do comprovante">
+    <span class="icone">🧾</span>
+    <span>Toque para fotografar o comprovante</span>
+    <small>ou arraste / cole a foto aqui — pode mandar várias de uma vez</small>
+    <input type="file" id="foto" accept="image/*" multiple>
+  </label>
+
+  <div id="status" class="status" role="status" aria-live="polite"></div>
+
+  <!-- COMPROVANTES LIDOS -->
+  <div id="lista" class="lista"></div>
+
+  <button id="limpar" class="limpar" hidden>Apagar todos os comprovantes</button>
+
+  <!-- Avisinho que aparece embaixo (com botão de desfazer) -->
+  <div id="toast" class="toast" role="status"></div>
+
+  <footer>Feito na aula • Missão Programação do ZERO com IA</footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

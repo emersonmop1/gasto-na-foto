@@ -1,0 +1,361 @@
+/* ===== Gasto na Foto — visual limpo de app de finanças ===== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Rubik", sans-serif;
+  background-color: #f2f5f9;
+  color: #22304a;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  font-size: 28px;
+  color: #22304a;
+}
+
+header p {
+  color: #6b7a94;
+  font-size: 15px;
+  margin-top: 4px;
+}
+
+/* CARTÃO DO TOTAL */
+.cartao-total {
+  background-color: #0f766e;
+  color: #ffffff;
+  border-radius: 18px;
+  padding: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 10px 24px rgba(15, 118, 110, 0.3);
+}
+
+.cartao-total .rotulo {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+#total {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ÁREA DE FOTO */
+.area-foto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  border: 3px dashed #c3cfe0;
+  border-radius: 16px;
+  padding: 28px 16px;
+  margin-top: 18px;
+  background-color: #ffffff;
+  color: #4a5b78;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s, opacity 0.2s;
+}
+
+.area-foto:hover {
+  border-color: #0f766e;
+  background-color: #f0fdfa;
+}
+
+.area-foto:focus-visible {
+  outline: 3px solid #0f766e;
+  outline-offset: 2px;
+}
+
+/* quando a pessoa está arrastando uma foto por cima */
+.area-foto.arrastando {
+  border-color: #0f766e;
+  border-style: solid;
+  background-color: #f0fdfa;
+}
+
+/* enquanto a IA está trabalhando, a área "descansa" */
+.area-foto.ocupada {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.area-foto small {
+  color: #93a1b8;
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.icone {
+  font-size: 42px;
+}
+
+#foto {
+  display: none;
+}
+
+.status {
+  text-align: center;
+  color: #0f766e;
+  font-weight: 500;
+  min-height: 22px;
+  margin: 14px 0;
+}
+
+.status.erro {
+  color: #b91c1c;
+}
+
+/* rodinha girando enquanto a IA lê */
+.girando {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #99f6e4;
+  border-top-color: #0f766e;
+  border-radius: 50%;
+  vertical-align: -2px;
+  margin-right: 8px;
+  animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+
+/* COMPROVANTES LIDOS */
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.vazio {
+  text-align: center;
+  color: #93a1b8;
+  font-size: 14px;
+  padding: 10px 0;
+}
+
+.comprovante {
+  background-color: #ffffff;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+/* o cartão que acabou de chegar desliza pra dentro */
+.comprovante.novo {
+  animation: surgir 0.35s ease;
+}
+
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+/* topo do comprovante: emoji + estabelecimento + categoria */
+.cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e6ebf3;
+}
+
+.cabecalho .emoji {
+  font-size: 26px;
+}
+
+/* quando o comprovante tem foto guardada, o emoji vira "botão" de ver a foto */
+.cabecalho .emoji.tem-foto {
+  cursor: zoom-in;
+  transition: transform 0.15s;
+}
+
+.cabecalho .emoji.tem-foto:hover {
+  transform: scale(1.15);
+}
+
+.cabecalho .quem {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cabecalho strong {
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+
+.cabecalho .data {
+  font-size: 12px;
+  font-weight: 400;
+  color: #93a1b8;
+}
+
+.cabecalho small {
+  background-color: #f0fdfa;
+  color: #0f766e;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* botãozinho de apagar o comprovante */
+.apagar {
+  background: none;
+  border: none;
+  color: #c3cfe0;
+  font-size: 15px;
+  line-height: 1;
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.apagar:hover {
+  color: #b91c1c;
+  background-color: #fef2f2;
+}
+
+/* cada item comprado, separadinho */
+.itens {
+  list-style: none;
+  padding: 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.itens li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 15px;
+  color: #4a5b78;
+}
+
+.itens li span:last-child {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* total daquela nota */
+.total-nota {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px dashed #d6dee9;
+  font-size: 15px;
+  color: #6b7a94;
+}
+
+.total-nota strong {
+  font-size: 20px;
+  color: #0f766e;
+}
+
+/* botão discreto de apagar tudo */
+.limpar {
+  display: block;
+  margin: 18px auto 0;
+  background: none;
+  border: none;
+  color: #93a1b8;
+  font-family: inherit;
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.limpar:hover {
+  color: #b91c1c;
+}
+
+/* avisinho que sobe do rodapé (com botão de desfazer) */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 90px);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background-color: #22304a;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 12px 18px;
+  border-radius: 30px;
+  box-shadow: 0 10px 24px rgba(34, 48, 74, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.25s, opacity 0.25s;
+  z-index: 20;
+}
+
+.toast.visivel {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.toast button {
+  background: none;
+  border: none;
+  color: #5eead4;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* foto do comprovante em tela cheia */
+.visor {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  cursor: zoom-out;
+  z-index: 30;
+}
+
+.visor img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 12px;
+}
+
+footer {
+  text-align: center;
+  color: #93a1b8;
+  font-size: 13px;
+  margin-top: 28px;
+}
